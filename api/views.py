@@ -1,3 +1,4 @@
+from rest_framework.generics import RetrieveAPIView, ListAPIView
 from django.contrib.auth import authenticate
 from rest_framework.views import APIView
 from rest_framework.generics import RetrieveAPIView
@@ -57,4 +58,12 @@ class StaffWriteView(APIView):
 class NoteDetailView(RetrieveAPIView):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
-    permission_classes = [IsAuthenticated, IsOwner]
+    permission_classes = [IsOwner]
+
+
+class NoteListView(ListAPIView):
+    serializer_class = NoteSerializer
+    permission_classes = [IsOwner]
+
+    def get_queryset(self):
+        return Note.objects.filter(owner=self.request.user)

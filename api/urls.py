@@ -1,10 +1,18 @@
 from django.urls import path
-from .views import LoginView, ProtectedView, ReadOnlyView, StaffWriteView, NoteDetailView
+from .views import (
+    LoginView,
+    ProtectedView,
+    ReadOnlyView,
+    StaffWriteView,
+    NoteDetailView,
+    NoteListView,
+)
 
 urlpatterns = [
     path("login/", LoginView.as_view(), name="login"),
     path("protected/", ProtectedView.as_view(), name="protected"),
     path("readonly/", ReadOnlyView.as_view(), name="readonly"),
     path("staff/", StaffWriteView.as_view(), name="staff"),
+    path("notes/", NoteListView.as_view(), name="note-list"),
     path("notes/<int:pk>/", NoteDetailView.as_view(), name="note-detail"),
 ]
