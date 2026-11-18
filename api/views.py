@@ -1,9 +1,12 @@
 from django.contrib.auth import authenticate
 from rest_framework.views import APIView
+from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
-from .permissions import IsStaffOrReadOnly
+from .permissions import IsStaffOrReadOnly, IsOwner
+from .models import Note
+from .serializers import NoteSerializer
 
 
 class LoginView(APIView):
@@ -49,3 +52,9 @@ class StaffWriteView(APIView):
 
     def post(self, request):
         return Response({"message": "Staff users can write here"})
+
+
+class NoteDetailView(RetrieveAPIView):
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
+    permission_classes = [IsAuthenticated, IsOwner]

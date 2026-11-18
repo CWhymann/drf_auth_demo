@@ -8,3 +8,10 @@ class IsStaffOrReadOnly(BasePermission):
         if request.method in ("GET", "HEAD", "OPTIONS"):
             return True
         return request.user.is_authenticated and request.user.is_staff
+
+
+class IsOwner(BasePermission):
+    """Allow access only to the owner of the object."""
+
+    def has_object_permission(self, request, view, obj):
+        return obj.owner == request.user
