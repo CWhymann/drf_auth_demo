@@ -1,13 +1,12 @@
-from rest_framework.generics import RetrieveAPIView, ListAPIView
 from django.contrib.auth import authenticate
 from rest_framework.views import APIView
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, ListAPIView, CreateAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 from .permissions import IsStaffOrReadOnly, IsOwner
 from .models import Note
-from .serializers import NoteSerializer
+from .serializers import NoteSerializer, RegisterSerializer
 
 
 class LoginView(APIView):
@@ -67,3 +66,8 @@ class NoteListView(ListAPIView):
 
     def get_queryset(self):
         return Note.objects.filter(owner=self.request.user)
+
+
+class RegisterView(CreateAPIView):
+    serializer_class = RegisterSerializer
+    permission_classes = [AllowAny]

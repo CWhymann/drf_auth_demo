@@ -6,10 +6,12 @@ from .views import (
     StaffWriteView,
     NoteDetailView,
     NoteListView,
+    RegisterView,
 )
 
 urlpatterns = [
     path("login/", LoginView.as_view(), name="login"),
+    path("register/", RegisterView.as_view(), name="register"),
     path("protected/", ProtectedView.as_view(), name="protected"),
     path("readonly/", ReadOnlyView.as_view(), name="readonly"),
     path("staff/", StaffWriteView.as_view(), name="staff"),
